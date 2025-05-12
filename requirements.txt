@@ -1,4 +1,6 @@
 Flask
+jinja2
+werkzeug
 torch
 torchvision
 timm
