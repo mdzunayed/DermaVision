@@ -2,183 +2,309 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>MelanomaScan – Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DermaVision – Results</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
         --primary: #2d9953;
         --secondary: #38b869;
+        --alert: #e74c3c;
         --bg-start: #e0f4eb;
         --bg-end: #d1f9e2;
         --card-bg: #ffffff;
         --text-dark: #333333;
         --text-light: #ffffff;
-        --bar-bg: #e0e0e0;
+        --bar-bg: #f0f0f0;
+        --radius: 14px;
+        --gap: 1rem;
       }
-      * {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
       }
       body {
+        margin: 0;
+        padding: 20px;
         font-family: "Poppins", sans-serif;
-        background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+        background: linear-gradient(189deg, #3f3895fa, #3b9a72);
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        padding: 20px;
+        color: var(--text-dark);
       }
       .container {
-        max-width: 800px;
         width: 100%;
-      }
-      h1 {
-        text-align: center;
-        color: var(--primary);
-        margin-bottom: 24px;
-        font-size: 32px;
+        max-width: 900px;
       }
       .card {
         background: var(--card-bg);
-        border-radius: 16px;
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        border-radius: var(--radius);
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
         overflow: hidden;
-        padding: 24px;
+        padding: 3rem 2.5rem;
       }
-      .images {
-        display: flex;
-        gap: 24px;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-bottom: 24px;
-      }
-      .img-box {
-        flex: 1 1 280px;
+      .card-header {
         text-align: center;
+        margin-bottom: 1rem;
       }
-      .img-box h3 {
-        margin-bottom: 12px;
-        color: var(--text-dark);
-        font-size: 18px;
+      .card-header h1 {
+        color: #124ca4;
+        margin: 0;
+        font-size: 2.75rem;
+        font-weight: 700;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
       }
-      .img-box img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      .card-header h2 {
+        color: #214fc5;
+        margin: 0.15rem 0;
+        font-size: 1.75rem;
+        font-weight: 500;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+      }
+      .image-full {
+        text-align: center;
+        margin-bottom: var(--gap);
+      }
+      .image-full h3 {
+        color: #000;
+        margin: 0.1rem 0;
+        font-size: 1.75rem;
+        font-weight: 350;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+      }
+      .image-full span {
+        margin-left: 0.5rem;
+        font-size: 1.125rem;
+        cursor: help;
+      }
+      .image-full img {
+        display: block;
+        max-width: 100%;
+        border-radius: var(--radius);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        margin: 0 auto;
+      }
+      .confidence-label {
+        text-align: center;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--primary);
+        border-radius: var(--radius);
+        background: var(--bg-start);
+        font-weight: 500;
+        margin: 1rem auto;
+      }
+      .confidence-level {
+        text-align: center;
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: var(--radius);
+        background: var(--bar-bg);
+        font-weight: 500;
+        margin: 0.5rem auto 1.5rem;
+        display: inline-block;
+      }
+      .summary {
+        background: var(--bg-end);
+        border-radius: var(--radius);
+        padding: calc(var(--gap) * 1.2);
+        margin: var(--gap) 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: var(--gap);
+        align-items: start;
+        box-shadow: inset 0 0 0 1px var(--primary);
+      }
+      .summary::before {
+        content: "ℹ️";
+        font-size: 1.5rem;
+      }
+      .summary strong {
+        color: var(--primary);
+        margin-bottom: 0.25rem;
+        display: block;
+      }
+      .summary p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.4;
       }
       .prediction {
         text-align: center;
-        margin-bottom: 24px;
-        font-size: 20px;
-        color: var(--text-dark);
+        font-size: 1.15rem;
+        margin-bottom: 2rem;
       }
       .prediction .pill {
         display: inline-block;
         background: var(--primary);
         color: var(--text-light);
-        padding: 6px 14px;
-        border-radius: 12px;
-        font-weight: 600;
-        margin-left: 8px;
+        padding: 0.5rem 1.5rem;
+        border-radius: 999px;
+        font-weight: 700;
+        margin-left: 0.75rem;
       }
       .results {
-        margin-bottom: 24px;
+        margin-bottom: 2rem;
       }
       .prob-row {
-        display: flex;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
         align-items: center;
-        margin-bottom: 12px;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
       }
       .prob-label {
-        width: 100px;
-        color: var(--text-dark);
         font-weight: 500;
+        white-space: nowrap;
       }
       .bar-container {
-        flex: 1;
         background: var(--bar-bg);
-        border-radius: 8px;
+        border-radius: var(--radius);
         overflow: hidden;
-        margin: 0 12px;
-        height: 16px;
+        height: 1rem;
       }
       .bar {
         height: 100%;
-        background: var(--secondary);
-        transition: width 0.5s ease;
+        transition: width 0.6s ease;
       }
       .prob-value {
-        width: 50px;
-        text-align: right;
-        font-size: 14px;
-        color: var(--text-dark);
+        font-size: 0.875rem;
+        white-space: nowrap;
       }
-      .btn-back {
-        display: block;
-        text-align: center;
-        margin: 0 auto;
-        padding: 12px 28px;
-        background: var(--primary);
-        color: var(--text-light);
+      .legend {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        font-size: 0.875rem;
+      }
+      .legend .box {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        margin-right: 0.5rem;
+        border-radius: 3px;
+      }
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .btn,
+      .btn-primary {
+        padding: 0.75rem 2rem;
+        border-radius: var(--radius);
         text-decoration: none;
-        border-radius: 8px;
         font-weight: 600;
         transition: background 0.3s;
+        text-align: center;
       }
-      .btn-back:hover {
+      .btn-primary {
+        background: var(--primary);
+        color: var(--text-light);
+      }
+      .btn-primary:hover {
         background: var(--secondary);
+      }
+      @media (max-width: 600px) {
+        .prob-row {
+          grid-template-columns: 1fr auto;
+        }
+        .prob-label {
+          display: none;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>DermaVision</h1>
-      <h1>Prediction Results</h1>
       <div class="card">
-        <div class="images">
-          <div class="img-box">
-            <h3>Original Image</h3>
-            <img
-              src="{{ url_for('static', filename='uploads/' ~ filename) }}"
-              alt="Uploaded image"
-            />
-          </div>
-          <div class="img-box">
-            <h3>Grad-CAM Overlay</h3>
-            <img
-              src="{{ url_for('static', filename='cams/' ~ cam_filename) }}"
-              alt="Grad-CAM overlay"
-            />
-          </div>
+        {% set confidence = results[0][1] if predicted_class == 'benign' else
+        results[1][1] %} {% set confidence_level = 'Low' if confidence < 0.5
+        else 'Moderate' if confidence < 0.75 else 'High' %}
+        <div class="card-header">
+          <h1>DermaVision</h1>
+          <h2>Prediction Results</h2>
         </div>
-
+        <div class="image-full">
+          <h3>
+            Grad-Cam Visualization
+            <span
+              title="This colored overlay shows which area the AI focused on most."
+              >ℹ️</span
+            >
+          </h3>
+          <img
+            src="{{ url_for('static', filename='cams/' ~ cam_filename) }}"
+            alt="Grad-CAM heatmap overlay on lesion"
+          />
+        </div>
+        <div class="confidence-label">
+          Confidence: <strong>{{ (confidence * 100) | round(1) }}%</strong>
+        </div>
+        <div class="confidence-level">
+          Confidence Level: <strong>{{ confidence_level }}</strong>
+        </div>
         <div class="prediction">
-          <strong>Predicted:</strong>
-          <span class="pill">{{ predicted_class | capitalize }}</span>
+          DermaVision predicts this lesion is
+          <span class="pill">
+            {% if predicted_class == 'benign' %}Non‑Cancerous{% else
+            %}Cancerous{% endif %}
+          </span>
         </div>
-
-        <div class="results">
+        <div class="results" aria-label="Probability breakdown">
           {% for name, p in results %}
           <div class="prob-row">
-            <div class="prob-label">{{ name | capitalize }}</div>
+            <div class="prob-label">
+              {% if name == 'benign' %}Non‑Cancerous{% else %}Cancerous{% endif
+              %}
+            </div>
             <div class="bar-container">
               <div
                 class="bar"
-                style="width: {{ (p * 100) | round(2) }}%;"
+                style="width: {{ (p * 100) | round(1) }}%; background: {% if name == 'malignant' %}var(--alert){% else %}var(--primary){% endif %};"
               ></div>
             </div>
             <div class="prob-value">{{ (p * 100) | round(1) }}%</div>
           </div>
           {% endfor %}
         </div>
-
-        <a href="{{ url_for('home') }}" class="btn-back">↩ Upload Another</a>
+        <div class="legend">
+          <span
+            ><span class="box" style="background: var(--primary)"></span
+            >Non‑Cancerous</span
+          >
+          <span
+            ><span class="box" style="background: var(--alert)"></span
+            >Cancerous</span
+          >
+        </div>
+        <div class="btn-group">
+          <a
+            href="{{ url_for('static', filename='cams/' ~ cam_filename) }}"
+            download
+            class="btn btn-primary"
+            >⬇ Download Grad-Cam</a
+          >
+          <a href="{{ url_for('home') }}" class="btn btn-primary"
+            >↩ Try Another Image</a
+          >
+        </div>
+        <div class="summary">
+          <p>
+            <strong>Note</strong>
+            This AI-driven estimate indicates the likelihood of malignancy. It's
+            intended solely for informational purposes and does not replace
+            professional medical advice. For any concerns, please consult a
+            specialist.
+          </p>
+        </div>
       </div>
     </div>
   </body>

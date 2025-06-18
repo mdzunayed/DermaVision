@@ -2,69 +2,83 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>MelanomaScan – Upload Image</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DermaVision – Upload Image</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --primary: #2d9953;
-        --secondary: #38b869;
-        --bg-start: #e0f4eb;
-        --bg-end: #d1f9e2;
-        --card-bg: #ffffff;
-        --text-dark: #333333;
-        --text-light: #ffffff;
-        --bar-bg: #e0e0e0;
+        --primary: #2b7a0b;
+        --secondary: #88cc88;
+        --accent: #55a630;
+        --bg-start: #e0ffe0;
+        --bg-end: rgb(160, 194, 160);
+        --card-bg: rgb(255, 255, 255);
+        --text-dark: #1b3e1b;
+        --text-light: rgb(179, 229, 223);
+        --border-dash: #b2e2b2;
+        --radius: 20px;
       }
-      * {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
       body {
         font-family: "Poppins", sans-serif;
-        background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+        background: linear-gradient(189deg, #3f3895fa, #3b9a72);
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         min-height: 100vh;
         padding: 20px;
       }
       .container {
+        max-width: 520px;
         width: 100%;
-        max-width: 400px;
       }
       .card {
         background: var(--card-bg);
-        border-radius: 16px;
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        padding: 32px 24px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: var(--radius);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+        padding: 70px 70px;
         text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
       .card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        transform: translateY(-10px);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
       }
       h1 {
-        font-size: 28px;
-        color: var(--primary);
-        margin-bottom: 16px;
+        color: #124ca4;
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
       }
       p.subtitle {
         color: var(--text-dark);
-        margin-bottom: 24px;
-        font-size: 16px;
+        margin-bottom: 32px;
+        font-size: 18px;
       }
-      .file-input-wrapper {
+      .drop-zone {
         position: relative;
-        margin-bottom: 24px;
+        padding: 60px 20px;
+        border: 2px dashed var(--border-dash);
+        border-radius: var(--radius);
+        background: #fbfffb;
+        cursor: pointer;
+        transition: background 0.3s, border-color 0.3s;
       }
-      .file-input-wrapper input[type="file"] {
+      .drop-zone:hover {
+        background: #f5fff5;
+        border-color: var(--accent);
+      }
+      .drop-zone input[type="file"] {
         position: absolute;
         top: 0;
         left: 0;
@@ -73,82 +87,81 @@
         opacity: 0;
         cursor: pointer;
       }
-      .custom-file-label {
-        display: block;
-        background: var(--bar-bg);
+      .drop-zone .icon {
+        font-size: 60px;
+        color: var(--border-dash);
+        margin-bottom: 16px;
+        transition: transform 0.3s, color 0.3s;
+      }
+      .drop-zone:hover .icon {
+        color: var(--primary);
+        transform: rotate(15deg);
+      }
+      .drop-zone .text {
+        font-size: 17px;
         color: var(--text-dark);
-        padding: 12px 16px;
-        border-radius: 8px;
-        font-weight: 500;
-        text-align: left;
-        transition: background 0.3s;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        transition: opacity 0.3s;
       }
-      .custom-file-label:hover {
-        background: var(--bg-start);
+      .preview-container {
+        margin-top: 24px;
+        text-align: center;
       }
-      button {
+      .preview-container img {
+        max-width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+      .btn-upload {
+        margin-top: 36px;
         width: 100%;
-        padding: 12px;
-        background: var(--primary);
+        padding: 16px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
         color: var(--text-light);
         border: none;
-        border-radius: 8px;
-        font-size: 16px;
+        border-radius: var(--radius);
+        font-size: 17px;
         font-weight: 600;
         cursor: pointer;
         transition: background 0.3s;
       }
-      button:hover {
-        background: var(--secondary);
+      .btn-upload:hover {
+        background: linear-gradient(90deg, var(--accent), var(--primary));
       }
       .error {
         color: #c00;
         margin-top: 16px;
-        font-size: 14px;
+        font-size: 15px;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="card">
-        <h1>DermaVision</h1>
-        <p class="subtitle">Upload a skin image to classify</p>
-        <form
-          action="{{ url_for('predict') }}"
-          method="post"
-          enctype="multipart/form-data"
-        >
-          <div class="file-input-wrapper">
-            <label for="image" class="custom-file-label"
-              >Choose an image…</label
-            >
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              required
-            />
+      <form
+        action="{{ url_for('predict') }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="card">
+          <h1>Welcome to DermaVision</h1>
+          <p class="subtitle">Upload or drag &amp; drop your lesion image</p>
+          <div class="drop-zone" id="drop-zone">
+            <div class="icon">🖼️</div>
+            <div class="text">Drag &amp; drop or click to select</div>
+            <input type="file" name="image" accept="image/*" required />
           </div>
-          <button type="submit">Upload &amp; Predict</button>
+          <div
+            class="preview-container"
+            id="preview-container"
+            style="display: none"
+          >
+            <img id="preview" src="#" alt="Preview of selected image" />
+          </div>
+          <button type="submit" class="btn-upload">Analyze Image</button>
           {% if error %}
           <div class="error">{{ error }}</div>
           {% endif %}
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
-
-    <script>
-      // Show selected filename
-      const fileInput = document.getElementById("image");
-      const label = document.querySelector(".custom-file-label");
-      fileInput.addEventListener("change", () => {
-        const name = fileInput.files[0]?.name || "Choose an image…";
-        label.textContent = name;
-      });
-    </script>
   </body>
 </html>
