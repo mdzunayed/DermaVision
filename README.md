@@ -40,7 +40,7 @@ DermaVision is a web application that leverages **explainable deep learning** to
 
 ## Technologies  
 **Deep Learning**:  
-- Models: DiCENet, Xception, EfficientNetV2-M  
+- Models: Xception  
 - Explainability: Grad-CAM  
 
 **Web Development**:  
