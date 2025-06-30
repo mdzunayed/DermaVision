@@ -1,10 +1,8 @@
-Flask
-jinja2
-werkzeug
-torch
-torchvision
-timm
-pillow
-numpy
-opencv-python
-pytorch-grad-cam
+torch==2.0.1
+torchvision==0.15.2
+grad-cam==1.4.6  # Instead of pytorch-grad-cam
+pillow==10.0.0
+numpy==1.24.3
+opencv-python==4.7.0.72
+flask==2.3.2
+gunicorn==20.1.0
