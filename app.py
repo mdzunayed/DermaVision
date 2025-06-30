@@ -2,7 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 import os
 from utils import load_model, generate_gradcam_visualization
-
+import requests
+def download_model(url):
+    response = requests.get(url)
+    with open("model/best_model_fold_4.pth", "wb") as f:
+        f.write(response.content)
 app = Flask(__name__)
 
 # Folders for uploads and CAMs
