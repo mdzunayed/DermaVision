@@ -2,11 +2,17 @@ services:
   - type: web
     name: dermavision
     runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    buildCommand: |
+      pip install --upgrade pip &&
+      pip install -r requirements.txt
+    startCommand: gunicorn --workers=2 --timeout=120 app:app
     python:
-      version: 3.11
+      version: 3.11.6 
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.6
-    plan: free  # Explicitly set to free tier
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: TRUE
+      - key: PYTORCH_CUDA_ALLOC_CONF
+        value: garbage_collection_threshold:0.8
+    plan: free
