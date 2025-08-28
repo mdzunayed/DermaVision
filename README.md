@@ -105,7 +105,7 @@ Follow these steps to set up and run the project locally. This process assumes y
 
 Alternatively, you can download the repository directly without using Git.
 
-1.  Go to the [DermaVision GitHub page](https://www.google.com/search?q=https://github.com/mdzunayed/DermaVision).
+1.  Go to the [DermaVision GitHub page]([https://www.google.com/search?q=https://github.com/mdzunayed/DermaVision](https://github.com/mdzunayed/DermaVision/)).
 2.  Click the green **`< > Code`** button.
 3.  Click **`Download ZIP`**.
 4.  Extract the contents of the ZIP file to your preferred location.
